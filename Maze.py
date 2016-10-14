@@ -8,13 +8,13 @@ class Maze:
     def __init__(self):
         self.x = random.randrange(25, 100)
         self.y = self.x
-        self.startPos = None
-        self.endPos = None
+        self.start_pos = None
+        self.end_pos = None
         self.poke = random.randrange(5, 20)
-        self.pokeLocations = [()]
-        self.grid = self.createGrid(self.createMaze(self.x, self.y))
+        self.poke_locations = [()]
+        self.grid = self.create_grid(self.create_maze(self.x, self.y))
 
-    def createMaze(self, mx, my):
+    def create_maze(self, mx, my):
         maze = [[0 for x in range(mx)] for y in range(my)]
         # 4 directions to move in the maze
         dx = [0, 1, 0, -1]
@@ -23,7 +23,7 @@ class Maze:
         cx = random.randint(0, mx - 1)
         cy = random.randint(0, my - 1)
         maze[cy][cx] = 1
-        stack = [(cx, cy, 0)] # stack element: (x, y, direction)
+        stack = [(cx, cy, 0)]  # stack element: (x, y, direction)
 
         while len(stack) > 0:
             (cx, cy, cd) = stack[-1]
@@ -31,15 +31,15 @@ class Maze:
             # if changed direction in the last move then cannot change again
             if len(stack) > 2:
                 if cd != stack[-2][2]:
-                    dirRange = [cd]
+                    dir_range = [cd]
                 else:
-                    dirRange = range(4)
+                    dir_range = range(4)
             else:
-                dirRange = range(4)
+                dir_range = range(4)
 
             # find a new cell to add
             nlst = [] # list of available neighbors
-            for i in dirRange:
+            for i in dir_range:
                 nx = cx + dx[i]
                 ny = cy + dy[i]
                 if nx >= 0 and nx < mx and ny >= 0 and ny < my:
@@ -66,47 +66,46 @@ class Maze:
 
         return maze
 
-
-    def createGrid(self, maze):
+    def create_grid(self, maze):
         grid = [[Cell(i, j, bool(maze[j][i]), False) for i in range(self.x)] for j in range(self.y)]
-        freeCells = []
+        free_cells = []
 
         for row in range(0, len(maze)):
             for cell in range(0, len(maze[row])):
                 if not maze[row][cell]:
-                    freeCells.append((row, cell))
+                    free_cells.append((row, cell))
 
-        self.pokeLocations = random.sample(freeCells, self.poke)
+        self.poke_locations = random.sample(free_cells, self.poke)
 
-        for location in self.pokeLocations:
-            grid[location[0]][location[1]].hasPoke = True
+        for location in self.poke_locations:
+            grid[location[0]][location[1]].has_poke = True
 
-        stillFree = random.sample([item for item in freeCells if item not in self.pokeLocations], 2)
-        self.startPos = stillFree[0]
-        self.endPos = stillFree[1]
+        still_free = random.sample([item for item in free_cells if item not in self.poke_locations], 2)
+        self.start_pos = still_free[0]
+        self.end_pos = still_free[1]
 
         return grid
 
-    def paintMaze(self):
-        imgx = self.x * 100
-        imgy = self.y * 100
-        image = Image.new("RGB", (imgx, imgy))
+    def paint_maze(self):
+        img_x = self.x * 100
+        img_y = self.y * 100
+        image = Image.new("RGB", (img_x, img_y))
         pixels = image.load()
-        for ky in range(imgy):
-            for kx in range(imgx):
-                y = self.y * ky / imgy
-                x = self.x * kx / imgx
-                cell = self.grid[self.y * ky / imgy][self.x * kx / imgx]
-                if (x == self.startPos[0] and y == self.startPos[1]):
+        for ky in range(img_y):
+            for kx in range(img_x):
+                y = self.y * ky / img_y
+                x = self.x * kx / img_x
+                cell = self.grid[self.y * ky / img_y][self.x * kx / img_x]
+                if x == self.start_pos[0] and y == self.start_pos[1]:
                     pixels[kx, ky] = (21, 39, 198)
                     continue
-                if (x == self.endPos[0] and y == self.endPos[1]):
+                if x == self.end_pos[0] and y == self.end_pos[1]:
                     pixels[kx, ky] = (167, 186, 1)
                     continue
-                if cell.isWall:
+                if cell.is_wall:
                     pixels[kx, ky] = (255, 255, 255)
                 else:
-                    if cell.hasPoke:
+                    if cell.has_poke:
                         pixels[kx, ky] = (255, 0, 0)
                     else:
                         pixels[kx, ky] = (0, 0, 0)
@@ -114,4 +113,4 @@ class Maze:
         image.show("Maze.png")
 
 test = Maze()
-test.paintMaze()
+test.paint_maze()
