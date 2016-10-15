@@ -12,7 +12,8 @@ class Tree:
 
         'Randomizing Initial Orientation'
         initial_ori = None
-        random_ori = random.randint(1, 5)
+        random_ori = random.randint(1, 4)
+        print(random_ori)
         if random_ori == 1:
             initial_ori = Direction.North
         if random_ori == 2:
@@ -24,5 +25,5 @@ class Tree:
 
         initial_state = State(initial_cell, initial_ori, 0)
         self.root = Node(initial_state, None, None, 0, 0)
-        q = list()
-        q.append(self.root)
+        self.q = list()
+        self.q.append(self.root)
