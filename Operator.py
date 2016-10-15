@@ -13,20 +13,32 @@ class Operator:
 
     @staticmethod
     def move(maze, node):
-        maze.grid[0][2].has_poke = True
-        print("Maze from Operator has_poke[0][2]: {0}".format(maze.grid[0][2].has_poke))
-
+        output_state = None
+        'Integer represents if the next cell has a pokemon'
+        output_has_poke = 0
         if node.state.ori == Direction.Direction.East:
-            node.state.cell.x += 1
-        elif node.state.ori == Direction.Direction.North:
-            node.state.cell.y += 1
-        elif node.state.ori == Direction.Direction.West:
-            node.state.cell.x -= 1
-        elif node.state.ori == Direction.Direction.South:
-            node.state.cell.y -= 1
+            if maze.grid[node.state.cell.x + 1][node.state.cell.y].has_poke:
+                output_has_poke = 1
+            output_state = State(maze.grid[node.state.cell.x + 1][node.state.cell.y], node.state.ori, node.state.pok_so_far + output_has_poke)
+            return Node(output_state, node, node.depth + 1, node.path_cost + 1)
 
-        'Zaki: Check if the cell has pokemons to catch them'
-        print("Operator Move Executed")
+        elif node.state.ori == Direction.Direction.North:
+            if maze.grid[node.state.cell.x][node.state.cell.y + 1].has_poke:
+                output_has_poke = 1
+            output_state = State(maze.grid[node.state.cell.x][node.state.cell.y + 1], node.state.ori, node.state.pok_so_far + output_has_poke)
+            return Node(output_state, node, node.depth + 1, node.path_cost + 1)
+
+        elif node.state.ori == Direction.Direction.West:
+            if maze.grid[node.state.cell.x - 1][node.state.cell.y].has_poke:
+                output_has_poke = 1
+            output_state = State(maze.grid[node.state.cell.x - 1][node.state.cell.y], node.state.ori, node.state.pok_so_far + output_has_poke)
+            return Node(output_state, node, node.depth + 1, node.path_cost + 1)
+
+        elif node.state.ori == Direction.Direction.South:
+            if maze.grid[node.state.cell.x][node.state.cell.y - 1].has_poke:
+                output_has_poke = 1
+            output_state = State(maze.grid[node.state.cell.x][node.state.cell.y - 1], node.state.ori, node.state.pok_so_far + output_has_poke)
+            return Node(output_state, node, node.depth + 1, node.path_cost + 1)
 
     @staticmethod
     def turn_right(node):
