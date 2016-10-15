@@ -2,20 +2,20 @@ import Direction
 from State import State
 from Node import Node
 from Cell import Cell
-from enum import Enum
+# import Search
 __author__ = 'Sabrout'
 
 
-class Operator(Enum):
+class Operator:
     """Class defines the operators to apply on the node.states"""
-
-    Move = 1
-    Right = 2
-    Left = 3
-    Back = 4
+    def __init__(self):
+        self.type = 1
 
     @staticmethod
-    def move(node):
+    def move(maze, node):
+        maze.grid[0][2].has_poke = True
+        print("Maze from Operator has_poke[0][2]: {0}".format(maze.grid[0][2].has_poke))
+
         if node.state.ori == Direction.Direction.East:
             node.state.cell.x += 1
         elif node.state.ori == Direction.Direction.North:
@@ -63,8 +63,8 @@ class Operator(Enum):
 
 
 'Test'
-initial_cell = Cell(1, 1, False, False)
-initial_state = State(initial_cell, Direction.Direction.North, 0)
-initial_node = Node(initial_state, None, None, 0, 0)
-Operator.move(initial_node)
-print(str(initial_cell))
+# initial_cell = Cell(1, 1, False, False)
+# initial_state = State(initial_cell, Direction.Direction.North, 0)
+# initial_node = Node(initial_state, None, None, 0, 0)
+# move(initial_node)
+# print(str(initial_cell))

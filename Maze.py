@@ -88,8 +88,8 @@ class Maze:
         return grid
 
     def paint_maze(self):
-        img_x = self.x * 100
-        img_y = self.y * 100
+        img_x = self.x * 10
+        img_y = self.y * 10
         image = Image.new("RGB", (img_x, img_y))
         pixels = image.load()
         for ky in range(img_y):
@@ -111,7 +111,7 @@ class Maze:
                     else:
                         pixels[kx, ky] = (0, 0, 0)
         image.save("Maze_" + str(self.x) + "x" + str(self.y) + ".png", "PNG")
-        image.show("Maze.png")
+        # image.show("Maze.png")
 
 test = Maze()
 test.paint_maze()
