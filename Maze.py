@@ -6,10 +6,11 @@ from PIL import Image
 class Maze:
 
     def __init__(self):
-        self.x = random.randrange(25, 100)
+        self.x = random.randrange(20, 50)
         self.y = self.x
         self.start_pos = None
         self.end_pos = None
+        self.hatch_units = random.randint(10, self.x)
         self.poke = random.randrange(5, 20)
         self.poke_locations = [()]
         self.grid = self.create_grid(self.create_maze(self.x, self.y))
