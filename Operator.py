@@ -1,12 +1,13 @@
 import Direction
 from State import State
+from Node import Node
 from Cell import Cell
 from enum import Enum
 __author__ = 'Sabrout'
 
 
 class Operator(Enum):
-    """Class defines the operators to apply on the states"""
+    """Class defines the operators to apply on the node.states"""
 
     Move = 1
     Right = 2
@@ -14,52 +15,56 @@ class Operator(Enum):
     Back = 4
 
     @staticmethod
-    def move(state):
-        if state.ori == Direction.Direction.East:
-            state.cell.x += 1
-        elif state.ori == Direction.Direction.North:
-            state.cell.y += 1
-        elif state.ori == Direction.Direction.West:
-            state.cell.x -= 1
-        elif state.ori == Direction.Direction.South:
-            state.cell.y -= 1
+    def move(node):
+        if node.state.ori == Direction.Direction.East:
+            node.state.cell.x += 1
+        elif node.state.ori == Direction.Direction.North:
+            node.state.cell.y += 1
+        elif node.state.ori == Direction.Direction.West:
+            node.state.cell.x -= 1
+        elif node.state.ori == Direction.Direction.South:
+            node.state.cell.y -= 1
+
+        'Zaki: Check if the cell has pokemons to catch them'
+        print("Operator Move Executed")
 
     @staticmethod
-    def turn_right(state):
-        if state.ori == Direction.Direction.East:
-            state.ori = Direction.Direction.South
-        elif state.ori == Direction.Direction.North:
-            state.ori = Direction.Direction.East
-        elif state.ori == Direction.Direction.West:
-            state.ori = Direction.Direction.North
-        elif state.ori == Direction.Direction.South:
-            state.ori = Direction.Direction.West
+    def turn_right(node):
+        if node.state.ori == Direction.Direction.East:
+            node.state.ori = Direction.Direction.South
+        elif node.state.ori == Direction.Direction.North:
+            node.state.ori = Direction.Direction.East
+        elif node.state.ori == Direction.Direction.West:
+            node.state.ori = Direction.Direction.North
+        elif node.state.ori == Direction.Direction.South:
+            node.state.ori = Direction.Direction.West
 
     @staticmethod
-    def turn_left(state):
-        if state.ori == Direction.Direction.East:
-            state.ori = Direction.Direction.North
-        elif state.ori == Direction.Direction.North:
-            state.ori = Direction.Direction.West
-        elif state.ori == Direction.Direction.West:
-            state.ori = Direction.Direction.South
-        elif state.ori == Direction.Direction.South:
-            state.ori = Direction.Direction.East
+    def turn_left(node):
+        if node.state.ori == Direction.Direction.East:
+            node.state.ori = Direction.Direction.North
+        elif node.state.ori == Direction.Direction.North:
+            node.state.ori = Direction.Direction.West
+        elif node.state.ori == Direction.Direction.West:
+            node.state.ori = Direction.Direction.South
+        elif node.state.ori == Direction.Direction.South:
+            node.state.ori = Direction.Direction.East
 
     @staticmethod
-    def turn_back(state):
-        if state.ori == Direction.Direction.East:
-            state.ori = Direction.Direction.West
-        elif state.ori == Direction.Direction.North:
-            state.ori = Direction.Direction.South
-        elif state.ori == Direction.Direction.West:
-            state.ori = Direction.Direction.East
-        elif state.ori == Direction.Direction.South:
-            state.ori = Direction.Direction.North
+    def turn_back(node):
+        if node.state.ori == Direction.Direction.East:
+            node.state.ori = Direction.Direction.West
+        elif node.state.ori == Direction.Direction.North:
+            node.state.ori = Direction.Direction.South
+        elif node.state.ori == Direction.Direction.West:
+            node.state.ori = Direction.Direction.East
+        elif node.state.ori == Direction.Direction.South:
+            node.state.ori = Direction.Direction.North
 
 
 'Test'
-initialCell = Cell(1, 1, False, False)
-initialState = State(initialCell, Direction.Direction.North, 0)
-Operator.move(initialState)
-print(str(initialCell))
+initial_cell = Cell(1, 1, False, False)
+initial_state = State(initial_cell, Direction.Direction.North, 0)
+initial_node = Node(initial_state, None, None, 0, 0)
+Operator.move(initial_node)
+print(str(initial_cell))
