@@ -13,7 +13,8 @@ class Maze:
         self.hatch_units = random.randint(3, self.x)
         self.poke = random.randrange(2, 5)
         self.poke_locations = [()]
-        self.grid = self.create_grid(self.create_maze(self.x, self.y))
+        self.maze = self.create_maze(self.x, self.y)
+        self.grid = self.create_grid(self.maze)
 
     def create_maze(self, mx, my):
         maze = [[0 for x in range(mx)] for y in range(my)]
@@ -76,13 +77,13 @@ class Maze:
                 if not maze[row][cell]:
                     free_cells.append((row, cell))
 
-        self.poke_locations = random.sample(free_cells, self.poke)
+        self.poke_locations = free_cells #random.sample(free_cells, self.poke)
 
         for location in self.poke_locations:
             grid[location[0]][location[1]].has_poke = True
             # print("Grid test isWall and hasPoke: {0}".format(grid[location[0]][location[1]].is_wall))
 
-        still_free = random.sample([item for item in free_cells if item not in self.poke_locations], 2)
+        still_free = free_cells #random.sample([item for item in free_cells if item not in self.poke_locations], 2)
         self.start_pos = still_free[0]
         self.end_pos = still_free[1]
 
@@ -114,5 +115,25 @@ class Maze:
         image.save("Maze_" + str(self.x) + "x" + str(self.y) + ".png", "PNG")
         # image.show("Maze.png")
 
+    # toString function
+    def print_grid(self):
+        print_matrix = [[]for y in range(self.grid.__len__())]
+        for i in range(self.grid.__len__()):
+            for j in range(self.grid[i].__len__()):
+                if self.grid[i][j].is_wall:
+                    print_matrix[i].append(1)
+
+                if not self.grid[i][j].is_wall and not self.grid[i][j].has_poke:
+                    print_matrix[i].append(0)
+
+                if self.grid[i][j].has_poke:
+                    print_matrix[i].append(8)
+
+                if i == self.start_pos[0] and j == self.start_pos[1]:
+                    print_matrix[i][j] = 5
+
+                if i == self.end_pos[0] and j == self.end_pos[1]:
+                    print_matrix[i][j] = 3
+        return print_matrix
 test = Maze()
 test.paint_maze()

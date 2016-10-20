@@ -7,7 +7,7 @@ import OperatorType
 def search(maze):
     tree = Tree(maze)
     i = 0
-    while i <= 1000:
+    while i <= 100000:
         if not tree.q:
             return None
         node = tree.q.pop()
@@ -43,6 +43,7 @@ def expand(node):
     print(not nodes)
     return nodes
 
+#Test Zone
 
 search_maze = Maze()
 operator = Operator()
@@ -51,6 +52,7 @@ print("-------Maze-------")
 print("PokeNo: {0}, Hatch Units: {1}".format(search_maze.poke, search_maze.hatch_units))
 print("StartCell_X = {0}, StartCell_Y = {1}".format(search_maze.start_pos[0], search_maze.start_pos[1]))
 print("EndCell_X = {0}, EndCell_Y = {1}".format(search_maze.end_pos[0], search_maze.end_pos[1]))
+
 if out is None:
     print("None")
 else:
