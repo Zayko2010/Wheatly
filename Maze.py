@@ -6,12 +6,12 @@ from PIL import Image
 class Maze:
 
     def __init__(self):
-        self.x = random.randrange(20, 50)
+        self.x = random.randrange(5, 10)
         self.y = self.x
         self.start_pos = None
         self.end_pos = None
-        self.hatch_units = random.randint(10, self.x)
-        self.poke = random.randrange(5, 20)
+        self.hatch_units = random.randint(3, self.x)
+        self.poke = random.randrange(2, 5)
         self.poke_locations = [()]
         self.grid = self.create_grid(self.create_maze(self.x, self.y))
 
@@ -80,6 +80,7 @@ class Maze:
 
         for location in self.poke_locations:
             grid[location[0]][location[1]].has_poke = True
+            # print("Grid test isWall and hasPoke: {0}".format(grid[location[0]][location[1]].is_wall))
 
         still_free = random.sample([item for item in free_cells if item not in self.poke_locations], 2)
         self.start_pos = still_free[0]

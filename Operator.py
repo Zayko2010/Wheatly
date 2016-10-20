@@ -16,28 +16,36 @@ class Operator:
         """Integer represents if the next cell has a pokemon"""
         output_has_poke = 0
         if node.state.ori == Direction.Direction.East:
-            if maze.grid[node.state.cell.y + 1][node.state.cell.x].has_poke:
-                output_has_poke = 1
-            output_state = State(maze.grid[node.state.cell.y + 1][node.state.cell.x], node.state.ori, node.state.pok_so_far + output_has_poke)
-            return Node(output_state, node, OperatorType.Move, node.depth + 1, node.path_cost + 1)
+            if not maze.grid[node.state.cell.y + 1][node.state.cell.x].is_wall:
+                if maze.grid[node.state.cell.y + 1][node.state.cell.x].has_poke:
+                    output_has_poke = 1
+                output_state = State(maze.grid[node.state.cell.y + 1][node.state.cell.x], node.state.ori, node.state.pok_so_far + output_has_poke)
+                return Node(output_state, node, OperatorType.Move, node.depth + 1, node.path_cost + 1)
+            return None
 
         elif node.state.ori == Direction.Direction.North:
-            if maze.grid[node.state.cell.y][node.state.cell.x + 1].has_poke:
-                output_has_poke = 1
-            output_state = State(maze.grid[node.state.cell.y][node.state.cell.x + 1], node.state.ori, node.state.pok_so_far + output_has_poke)
-            return Node(output_state, node, OperatorType.Move, node.depth + 1, node.path_cost + 1)
+            if not maze.grid[node.state.cell.y][node.state.cell.x + 1].is_wall:
+                if maze.grid[node.state.cell.y][node.state.cell.x + 1].has_poke:
+                    output_has_poke = 1
+                output_state = State(maze.grid[node.state.cell.y][node.state.cell.x + 1], node.state.ori, node.state.pok_so_far + output_has_poke)
+                return Node(output_state, node, OperatorType.Move, node.depth + 1, node.path_cost + 1)
+            return None
 
         elif node.state.ori == Direction.Direction.West:
-            if maze.grid[node.state.cell.y - 1][node.state.cell.x].has_poke:
-                output_has_poke = 1
-            output_state = State(maze.grid[node.state.cell.y - 1][node.state.cell.x], node.state.ori, node.state.pok_so_far + output_has_poke)
-            return Node(output_state, node, OperatorType.Move, node.depth + 1, node.path_cost + 1)
+            if not maze.grid[node.state.cell.y - 1][node.state.cell.x].is_wall:
+                if maze.grid[node.state.cell.y - 1][node.state.cell.x].has_poke:
+                    output_has_poke = 1
+                output_state = State(maze.grid[node.state.cell.y - 1][node.state.cell.x], node.state.ori, node.state.pok_so_far + output_has_poke)
+                return Node(output_state, node, OperatorType.Move, node.depth + 1, node.path_cost + 1)
+            return None
 
         elif node.state.ori == Direction.Direction.South:
-            if maze.grid[node.state.cell.y][node.state.cell.x - 1].has_poke:
-                output_has_poke = 1
-            output_state = State(maze.grid[node.state.cell.y][node.state.cell.x - 1], node.state.ori, node.state.pok_so_far + output_has_poke)
-            return Node(output_state, node, OperatorType.Move, node.depth + 1, node.path_cost + 1)
+            if not maze.grid[node.state.cell.y][node.state.cell.x - 1].is_wall:
+                if maze.grid[node.state.cell.y][node.state.cell.x - 1].has_poke:
+                    output_has_poke = 1
+                output_state = State(maze.grid[node.state.cell.y][node.state.cell.x - 1], node.state.ori, node.state.pok_so_far + output_has_poke)
+                return Node(output_state, node, OperatorType.Move, node.depth + 1, node.path_cost + 1)
+            return None
 
         print("ERROR")
 
