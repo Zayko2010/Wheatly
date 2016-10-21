@@ -111,7 +111,9 @@ else:
     print("Path:")
     node = out
     while node:
-        print("[({0}, {1}), Dir: {2}]".format(node.state.cell.x, node.state.cell.y, node.state.ori))
+        print("[({0}, {1}), Dir: {2}]".format(node.state.cell.x, node.state.cell.y
+                                              , "North" if node.state.ori == 1 else "East" if node.state.ori == 2 else
+                                              "South" if node.state.ori == 3 else "West"))
         node = node.parent_node
 # print("Before Move in Search: " + str(tree.root.state.cell))
 # tree.q.append(operator.move(maze, tree.root))
