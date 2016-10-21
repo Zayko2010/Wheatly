@@ -6,11 +6,11 @@ from PIL import Image
 class Maze:
 
     def __init__(self):
-        self.x = random.randrange(10, 11)
+        self.x = random.randrange(4, 5)
         self.y = self.x
         self.start_pos = None
         self.end_pos = None
-        self.hatch_units = random.randint(3, self.x)
+        self.hatch_units = random.randint(10, self.x + 15)
         self.poke = random.randrange(2, 5)
         self.poke_locations = [()]
         self.maze = self.create_maze(self.x, self.y)
@@ -69,21 +69,21 @@ class Maze:
         return maze
 
     def create_grid(self, maze):
-        grid = [[Cell(i, j, bool(maze[j][i]), False) for i in range(self.x)] for j in range(self.y)]
+        grid = [[Cell(j, i, not bool(maze[j][i]), False) for i in range(self.y)] for j in range(self.x)]
         free_cells = []
 
-        for row in range(0, len(maze)):
-            for cell in range(0, len(maze[row])):
-                if not maze[row][cell]:
+        for row in range(len(maze)):
+            for cell in range(len(maze[row])):
+                if bool(maze[row][cell]):
                     free_cells.append((row, cell))
 
-        self.poke_locations = free_cells #random.sample(free_cells, self.poke)
+        self.poke_locations = random.sample(free_cells, self.poke)
 
         for location in self.poke_locations:
             grid[location[0]][location[1]].has_poke = True
             # print("Grid test isWall and hasPoke: {0}".format(grid[location[0]][location[1]].is_wall))
 
-        still_free = free_cells #random.sample([item for item in free_cells if item not in self.poke_locations], 2)
+        still_free = random.sample([item for item in free_cells if item not in self.poke_locations], 2)
         self.start_pos = still_free[0]
         self.end_pos = still_free[1]
 

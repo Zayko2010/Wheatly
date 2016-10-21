@@ -57,7 +57,7 @@ print("-------------------")
 if pass_on:
     print("State #2")
     print("LocBefore ({0},{1})".format(state_one.state.cell.x, state_one.state.cell.y))
-    state_two = operator.move(search_maze, initial_node)
+    state_two = operator.move(search_maze, state_one)
     if not state_two : print("Wall!!")
     else :
         print("LocAfter ({0},{1})".format(state_two.state.cell.x, state_two.state.cell.y))
