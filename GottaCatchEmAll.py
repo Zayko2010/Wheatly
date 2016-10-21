@@ -5,7 +5,7 @@ from Tree import Tree
 import OperatorType
 
 
-class GottaCatchEmAll(Problem):
+class GottaCatchEmAll:
 
     def __init__(self, initial_state, maze, operators):
         self.initial_state = initial_state
@@ -25,14 +25,14 @@ class GottaCatchEmAll(Problem):
 
     def expand(self, node):
         nodes = list()
-        move_node = self.operators.move(self.maze, node)
-
-        if move_node:
-            nodes.append(move_node)
 
         if node.operator_type == OperatorType.OperatorType.Move or not node.operator_type:
             nodes.append(self.operators.turn_back(self.maze, node))
             nodes.append(self.operators.turn_left(self.maze, node))
             nodes.append(self.operators.turn_right(self.maze, node))
+
+        move_node = self.operators.move(self.maze, node)
+        if move_node:
+            nodes.append(move_node)
 
         return nodes

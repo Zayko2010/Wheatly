@@ -22,7 +22,7 @@ class Tree:
         if random_ori == 4:
             initial_ori = Direction.West
 
-        initial_state = State(initial_cell, initial_ori, 0, [(-1, -1)])
+        initial_state = State(initial_cell, initial_ori, 0, [])
         self.root = Node(initial_state, None, None, 0, 0)
         self.q = list()
         self.q.append(self.root)

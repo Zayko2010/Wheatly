@@ -6,7 +6,7 @@ from PIL import Image
 class Maze:
 
     def __init__(self):
-        self.x = random.randrange(4, 5)
+        self.x = random.randrange(3, 4)
         self.y = self.x
         self.start_pos = None
         self.end_pos = None
@@ -113,7 +113,6 @@ class Maze:
                     else:
                         pixels[kx, ky] = (0, 0, 0)
         image.save("Maze_" + str(self.x) + "x" + str(self.y) + ".png", "PNG")
-        # image.show("Maze.png")
 
     # toString function
     def print_grid(self):
@@ -135,5 +134,3 @@ class Maze:
                 if i == self.end_pos[0] and j == self.end_pos[1]:
                     print_matrix[i][j] = 3
         return print_matrix
-test = Maze()
-test.paint_maze()
