@@ -20,17 +20,17 @@ def search(maze, strategy, visualize):
     elif strategy == "UC":
         return uniform_cost_search(maze, visualize)
     elif strategy == "GR1":
-        return greedy_search(maze, 1)
+        return greedy_search(maze, 1, visualize)
     elif strategy == "GR2":
-        return greedy_search(maze, 2)
+        return greedy_search(maze, 2, visualize)
     elif strategy == "GR3":
-        return greedy_search(maze, 3)
+        return greedy_search(maze, 3, visualize)
     elif strategy == "AS1":
-        return a_star_search(maze, 1)
+        return a_star_search(maze, 1, visualize)
     elif strategy == "AS2":
-        return a_star_search(maze, 2)
+        return a_star_search(maze, 2, visualize)
     elif strategy == "AS3":
-        return a_star_search(maze, 3)
+        return a_star_search(maze, 3, visualize)
 
 
 def breadth_first_search(maze, visualize):
@@ -133,7 +133,6 @@ def uniform_cost_search(maze, visualize):
         for new_node in expansion_nodes:
             if new_node:
                 tree.q.insert(new_node.path_cost, new_node)
-                # expansion_nodes.remove(new_node)
 
         if visualize:
             print("ColPoke: {0}, UntWlk: {1},".format(node.state.pok_so_far, node.path_cost)),
@@ -141,7 +140,8 @@ def uniform_cost_search(maze, visualize):
             print("Op = {0}, poks_loc: {1}".format(node.operator_type, node.state.pok_locations))
             print("--------------------------------------------")
 
-def greedy_search(maze, h):
+
+def greedy_search(maze, h, visualize):
     tree = Tree(maze)
     nodes = 0
     while True:
@@ -166,10 +166,15 @@ def greedy_search(maze, h):
         for new_node in expansion_nodes:
             if new_node:
                 tree.q.insert(h_cost, new_node)
-                # expansion_nodes.remove(new_node)
+
+        if visualize:
+            print("ColPoke: {0}, UntWlk: {1},".format(node.state.pok_so_far, node.path_cost)),
+            print("Ag_X = {0}, Ag_Y = {1}, AgL: {2},".format(node.state.cell.x, node.state.cell.y, node.state.ori)),
+            print("Op = {0}, poks_loc: {1}".format(node.operator_type, node.state.pok_locations))
+            print("--------------------------------------------")
 
 
-def a_star_search(maze, h):
+def a_star_search(maze, h, visualize):
     tree = Tree(maze)
     nodes = 0
     while True:
@@ -194,7 +199,12 @@ def a_star_search(maze, h):
         for new_node in expansion_nodes:
             if new_node:
                 tree.q.insert(new_node.path_cost + h_cost, new_node)
-                expansion_nodes.remove(new_node)
+
+        if visualize:
+            print("ColPoke: {0}, UntWlk: {1},".format(node.state.pok_so_far, node.path_cost)),
+            print("Ag_X = {0}, Ag_Y = {1}, AgL: {2},".format(node.state.cell.x, node.state.cell.y, node.state.ori)),
+            print("Op = {0}, poks_loc: {1}".format(node.operator_type, node.state.pok_locations))
+            print("--------------------------------------------")
 
 
 def heuristic_1(node):
@@ -212,7 +222,16 @@ def heuristic_2(node):
 
 
 def heuristic_3(node):
-    return 0
+    current_x = node.state.cell.x
+    current_y = node.state.cell.y
+
+    poke_x = (gotta.maze.poke_locations[1])[0]
+    poke_y = (gotta.maze.poke_locations[1])[1]
+
+    end_x = gotta.maze.end_pos[0]
+    end_y = gotta.maze.end_pos[1]
+
+    return min(abs(end_x - poke_x - current_x), abs(end_y - poke_y - current_y))
 
 
 def path(node):
@@ -250,6 +269,10 @@ print(" ")
 # print search(maze_new, "BF", False)
 # print search(maze_new, "DF", False)
 # print search(maze_new, "ID", False)
-# print search(maze_new, "UC", True)
+# print search(maze_new, "UC", False)
 # print search(maze_new, "GR1", False)
 # print search(maze_new, "GR2", False)
+# print search(maze_new, "GR3", False)
+# print search(maze_new, "AS1", False)
+# print search(maze_new, "AS2", False)
+# print search(maze_new, "AS3", False)
