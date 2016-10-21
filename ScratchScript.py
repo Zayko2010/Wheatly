@@ -15,8 +15,8 @@ print("Size = {0}x{1}").format(search_maze.x, search_maze.y)
 print("StartCell ({0},{1})".format(search_maze.start_pos[0], search_maze.start_pos[1]))
 print("EndCell   ({0},{1})".format(search_maze.end_pos[0], search_maze.end_pos[1]))
 
-initial_cell = Cell(search_maze.x, search_maze.y, False, False)
-initial_state = State(initial_cell, Direction.South, 0)
+initial_cell = Cell(search_maze.start_pos[0], search_maze.start_pos[1], False, False)
+initial_state = State(initial_cell, Direction.East, 0)
 initial_node = Node(initial_state, None, None, 0, 0)
 
 # printing the maze
@@ -40,9 +40,25 @@ for i in range(search_maze.grid.__len__()):
 print("X")
 
 print("-------Agent-------")
+# State 1
+print("State #1")
 print("LocBefore ({0},{1})".format(initial_cell.x, initial_cell.y))
+state_one = operator.move(search_maze, initial_node)
+pass_on = True
+if not state_one :
+    print("Wall!!")
+    pass_on = False
+else :
+    print("LocAfter ({0},{1})".format(state_one.state.cell.x, state_one.state.cell.y))
+    print("PokemonsSoFar: {0}").format(state_one.state.pok_so_far)
 
-next_node = operator.move(search_maze, initial_node)
-
-if not next_node : print("Wall!!")
-else : print("LocAfter ({0},{1})".format(next_node.state.cell.x, next_node.state.cell.y))
+print("-------------------")
+# State 2
+if pass_on:
+    print("State #2")
+    print("LocBefore ({0},{1})".format(state_one.state.cell.x, state_one.state.cell.y))
+    state_two = operator.move(search_maze, initial_node)
+    if not state_two : print("Wall!!")
+    else :
+        print("LocAfter ({0},{1})".format(state_two.state.cell.x, state_two.state.cell.y))
+        print("PokemonsSoFar: {0}").format(state_two.state.pok_so_far)

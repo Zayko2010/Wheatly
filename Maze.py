@@ -6,7 +6,7 @@ from PIL import Image
 class Maze:
 
     def __init__(self):
-        self.x = random.randrange(5, 10)
+        self.x = random.randrange(10, 11)
         self.y = self.x
         self.start_pos = None
         self.end_pos = None
