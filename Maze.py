@@ -6,7 +6,7 @@ from PIL import Image
 class Maze:
 
     def __init__(self):
-        self.x = random.randrange(3, 4)
+        self.x = random.randrange(10, 15)
         self.y = self.x
         self.start_pos = None
         self.end_pos = None
@@ -134,3 +134,32 @@ class Maze:
                 if i == self.end_pos[0] and j == self.end_pos[1]:
                     print_matrix[i][j] = 3
         return print_matrix
+
+    #writing the maze sentences in a file
+    def write_maze(self, filename):
+        matrix = self.print_grid()
+        file = open(filename, 'r+')
+        file.seek(0, 0)
+        file.write('\n')
+        file.write('%%----- Cell Locations -----\n')
+        file.write('\n')
+        for i in range(self.grid.__len__()):
+            for j in range(self.grid[i].__len__()):
+                if matrix[i][j] in (0, 3, 5, 8):
+                    file.write('c({0}, {1}).'.format(i, j))
+                else:
+                    file.write('        ')
+            file.write('\n')
+        file.write('\n')
+        file.write('%%----- Pokemon Locations -----\n')
+        file.write('\n')
+        for i in range(self.grid.__len__()):
+            for j in range(self.grid[i].__len__()):
+                if matrix[i][j] == 8:
+                    file.write('p({0}, {1}).'.format(i, j))
+                else:
+                    file.write('        ')
+            file.write('\n')
+        file.write('%%-----------------------------\n')
+        file.write('\n')
+        file.close()

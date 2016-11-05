@@ -266,6 +266,8 @@ for i in range(maze_new.grid.__len__()):
 print("X")
 print(" ")
 
+maze_new.write_maze("Maze.pl")
+
 # print search(maze_new, "BF", False)
 # print search(maze_new, "DF", False)
 # print search(maze_new, "ID", False)
