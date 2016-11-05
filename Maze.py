@@ -6,7 +6,7 @@ from PIL import Image
 class Maze:
 
     def __init__(self):
-        self.x = random.randrange(10, 15)
+        self.x = random.randrange(7, 10)
         self.y = self.x
         self.start_pos = None
         self.end_pos = None
@@ -146,9 +146,9 @@ class Maze:
         for i in range(self.grid.__len__()):
             for j in range(self.grid[i].__len__()):
                 if matrix[i][j] in (0, 3, 5, 8):
-                    file.write(' c({0}, {1}). '.format(i, j))
+                    file.write('c({0}, {1}). '.format(i, j))
                 else:
-                    file.write('        ')
+                    file.write('         ')
             file.write('\n')
         file.write('\n')
         file.write('%%----- Pokemon Locations -----\n')
@@ -156,9 +156,9 @@ class Maze:
         for i in range(self.grid.__len__()):
             for j in range(self.grid[i].__len__()):
                 if matrix[i][j] == 8:
-                    file.write(' p({0}, {1}). '.format(i, j))
+                    file.write('p({0}, {1}). '.format(i, j))
                 else:
-                    file.write('        ')
+                    file.write('         ')
             file.write('\n')
         file.write('%%-----------------------------\n')
         file.write('\n')
