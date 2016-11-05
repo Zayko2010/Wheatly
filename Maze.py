@@ -146,7 +146,7 @@ class Maze:
         for i in range(self.grid.__len__()):
             for j in range(self.grid[i].__len__()):
                 if matrix[i][j] in (0, 3, 5, 8):
-                    file.write('c({0}, {1}).'.format(i, j))
+                    file.write(' c({0}, {1}). '.format(i, j))
                 else:
                     file.write('        ')
             file.write('\n')
@@ -156,7 +156,7 @@ class Maze:
         for i in range(self.grid.__len__()):
             for j in range(self.grid[i].__len__()):
                 if matrix[i][j] == 8:
-                    file.write('p({0}, {1}).'.format(i, j))
+                    file.write(' p({0}, {1}). '.format(i, j))
                 else:
                     file.write('        ')
             file.write('\n')
