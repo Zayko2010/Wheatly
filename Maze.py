@@ -157,6 +157,10 @@ class Maze:
             for j in range(self.grid[i].__len__()):
                 if matrix[i][j] == 8:
                     file.write('p({0}, {1}). '.format(i, j))
+                if matrix[i][j] == 5:
+                    file.write('start({0}, {1}). '.format(i, j))
+                if matrix[i][j] == 3:
+                    file.write('end({0}, {1}). '.format(i, j))
                 else:
                     file.write('         ')
             file.write('\n')
