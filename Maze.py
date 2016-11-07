@@ -6,7 +6,7 @@ from PIL import Image
 class Maze:
 
     def __init__(self):
-        self.x = random.randrange(7, 10)
+        self.x = random.randrange(5, 6)
         self.y = self.x
         self.start_pos = None
         self.end_pos = None
@@ -139,7 +139,7 @@ class Maze:
     def write_maze(self, filename):
         matrix = self.print_grid()
         file = open(filename, 'r+')
-        file.seek(0, 0)
+        file.seek(900, 1)
         file.write('\n')
         file.write('%%----- Cell Locations -----\n')
         file.write('\n')
