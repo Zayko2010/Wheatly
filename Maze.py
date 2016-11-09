@@ -6,12 +6,12 @@ from PIL import Image
 class Maze:
 
     def __init__(self):
-        self.x = random.randrange(5, 6)
+        self.x = random.randrange(4, 6)
         self.y = self.x
         self.start_pos = None
         self.end_pos = None
-        self.hatch_units = random.randint(10, self.x + 15)
-        self.poke = random.randrange(2, 5)
+        self.hatch_units = random.randint(5, self.x + 10)
+        self.poke = random.randrange(2, 4)
         self.poke_locations = [()]
         self.maze = self.create_maze(self.x, self.y)
         self.grid = self.create_grid(self.maze)
@@ -138,8 +138,8 @@ class Maze:
     #writing the maze sentences in a file
     def write_maze(self, filename):
         matrix = self.print_grid()
-        file = open(filename, 'r+')
-        file.seek(900, 1)
+        file = open(filename, 'w')
+        file.seek(0, 0)
         file.write('\n')
         file.write('%%----- Cell Locations -----\n')
         file.write('\n')
@@ -164,6 +164,40 @@ class Maze:
                 else:
                     file.write('         ')
             file.write('\n')
-        file.write('%%-----------------------------\n')
+        file.write('\n')
+        file.write('%%----------- Query -----------\n\n')
+        file.write('%% agent({0}, {1}, {2}, P, 0, S).'.format(self.end_pos[0], self.end_pos[1], self.poke))
+        file.write('\n\n')
+        file.write('%%----------- Agent -----------\n')
+        file.write('\n')
+        file.write('agent({0}, {1}, 0, [], {2}, s0).\n'.format(self.start_pos[0], self.start_pos[1], self.hatch_units))
+        file.write('\n')
+        file.write('possible(down, X, Y):-\n')
+        file.write('    X1 is X + 1,\n')
+        file.write('    c(X1, Y).\n')
+        file.write('possible(up, X, Y):-\n')
+        file.write('	X1 is X - 1,\n')
+        file.write('	c(X1, Y).\n')
+        file.write('possible(right, X, Y):-\n')
+        file.write('    Y1 is Y + 1,\n')
+        file.write('    c(X, Y1).\n')
+        file.write('possible(left, X, Y):-\n')
+        file.write('    Y1 is Y - 1,\n')
+        file.write('    c(X, Y1).\n')
+        file.write('possible(catch, X, Y):-\n')
+        file.write('    p(X, Y).\n')
+        file.write('agent(X1, Y1, P1, Ploc1, H1, result(A, S)):-\n')
+        file.write('	(agent(X, Y, P, Ploc, H, S), possible(A, X, Y), (\n')
+        file.write('		(A = down,  X1 is X + 1, Y1 is Y, P1 is P, Ploc1 = Ploc, hatch(H, H1));\n')
+        file.write('		(A = up,    X1 is X - 1, Y1 is Y, P1 is P, Ploc1 = Ploc, hatch(H, H1));\n')
+        file.write('		(A = right, Y1 is Y + 1, X1 is X, P1 is P, Ploc1 = Ploc, hatch(H, H1));\n')
+        file.write('		(A = left,  Y1 is Y - 1, X1 is X, P1 is P, Ploc1 = Ploc, hatch(H, H1));\n')
+        file.write('		(A = catch, P1 is P + 1, X1 is X, Y1 is Y, H1 is H,\n')
+        file.write('								\+member((X, Y), Ploc), Ploc1 = [(X, Y)|Ploc])\n')
+        file.write('	)).\n')
+        file.write('\n')
+        file.write('hatch(0, 0).\n')
+        file.write('hatch(H, H1):-\n')
+        file.write('	H1 is H - 1.\n')
         file.write('\n')
         file.close()
